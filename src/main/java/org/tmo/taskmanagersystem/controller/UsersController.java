@@ -7,6 +7,7 @@ import org.tmo.taskmanagersystem.model.Users;
 import org.tmo.taskmanagersystem.service.UsersService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -54,5 +55,16 @@ public class UsersController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         usersService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Partially update a user
+    @PatchMapping("/{id}")
+    public ResponseEntity<Users> partialUpdateUser(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Users updatedUser = usersService.partialUpdateUser(id, updates);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

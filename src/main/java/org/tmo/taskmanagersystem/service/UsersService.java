@@ -1,11 +1,14 @@
 package org.tmo.taskmanagersystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
 import org.tmo.taskmanagersystem.model.Users;
 import org.tmo.taskmanagersystem.repository.UsersRepository;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -53,6 +56,24 @@ public class UsersService
     public void deleteUser(Long userId)
     {
         usersRepository.deleteById(userId);
+    }
+
+    // Partially update a user
+    public Users partialUpdateUser(Long userId, Map<String, Object> updates) {
+        Users user = usersRepository.findById(userId).orElse(null);
+        if (user != null) {
+            updates.forEach((key, value) -> {
+                try {
+                    Field field = Users.class.getDeclaredField(key);
+                    field.setAccessible(true);
+                    field.set(user, value);
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace(); // Veya uygun bir şekilde hata yönetimi yapabilirsiniz
+                }
+            });
+            return usersRepository.save(user);
+        }
+        return null;
     }
 
 

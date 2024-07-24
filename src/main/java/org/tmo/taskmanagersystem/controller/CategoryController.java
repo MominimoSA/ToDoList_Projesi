@@ -9,7 +9,7 @@ import org.tmo.taskmanagersystem.service.CategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     @Autowired

@@ -9,7 +9,7 @@ import org.tmo.taskmanagersystem.service.TaskService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/task")
 public class TaskController {
 
     @Autowired
