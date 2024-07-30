@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,4 +26,5 @@ public class Users
     private String userPassword;
     @Column(name = "user_department")
     private String userDepartment;
+
 }

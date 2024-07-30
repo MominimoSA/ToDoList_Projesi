@@ -10,7 +10,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-
 @Service
 public class UsersService
 {
@@ -18,19 +17,17 @@ public class UsersService
     private UsersRepository usersRepository;
 
     // User için CRUD işlemlerini tanımlıyoruz
-
     // SELECT (Read)
     public List<Users> getAllUsers()
     {
         return usersRepository.findAll();
-    }
 
+    }
     // SELECT (Read)
     public Users getUserById(Long userId)
     {
         return usersRepository.findById(userId).orElse(null);
     }
-
     // INSERT INTO (Create)
     public Users createUser(Users users)
     {
@@ -51,14 +48,13 @@ public class UsersService
         }
         return null;
     }
-
     // DELETE
     public void deleteUser(Long userId)
     {
         usersRepository.deleteById(userId);
     }
 
-    // Partially update a user
+    // Kullanıcı kaydının bir kısmının güncellenmesi (UPDATE)
     public Users partialUpdateUser(Long userId, Map<String, Object> updates) {
         Users user = usersRepository.findById(userId).orElse(null);
         if (user != null) {
@@ -68,13 +64,11 @@ public class UsersService
                     field.setAccessible(true);
                     field.set(user, value);
                 } catch (NoSuchFieldException | IllegalAccessException e) {
-                    e.printStackTrace(); // Veya uygun bir şekilde hata yönetimi yapabilirsiniz
+                    e.printStackTrace();
                 }
             });
             return usersRepository.save(user);
         }
         return null;
     }
-
-
 }
